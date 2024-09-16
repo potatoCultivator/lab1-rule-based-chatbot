@@ -162,7 +162,7 @@ textarea::-webkit-scrollbar {
 @media (max-width: 768px) {
     .body {
         width: 90%;
-        height: 500px;
+        height: 100px;
         top: 10px;
         padding: 10px;
         margin-bottom: 20px; /* Add margin to prevent overlapping */
