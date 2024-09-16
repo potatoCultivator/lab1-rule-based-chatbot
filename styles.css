@@ -200,7 +200,7 @@ textarea::-webkit-scrollbar {
     }
 
     #actionSelect {
-        padding: 5px 5px;
+        padding: 10px 5px;
         font-size: 12px;
         margin-bottom: 18px;
     }
