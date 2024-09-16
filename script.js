@@ -52,9 +52,12 @@ async function sendMessage() {
             const ruleText = userInput.substring(12).trim().toLowerCase();
             console.log('Rule to delete: ', ruleText);
             deleteRuleByText(ruleText);
-        }
-        else if (userInput.toLowerCase().startsWith('display antecedent consequent')) {
+        } else if (userInput.toLowerCase().startsWith('display antecedent consequent')) {
             displayAntecedentConsequent();
+        } else if (userInput.toLowerCase().startsWith('delete fact')) {
+            const factText = userInput.substring(12).trim().toLowerCase();
+            console.log('Fact to delete: ', factText);
+            deleteFactByText(factText);
         } else {
             // Determine the collection based on the selected action
             if (action === 'chat') {
@@ -167,6 +170,32 @@ async function deleteRuleByText(ruleText) {
         console.log('Rule deleted successfully.');
     } catch (error) {
         console.error("Error deleting rule: ", error);
+    }
+}
+
+async function deleteFactByText(factText) {
+    try {
+        // Create a query to find the document with the specified text
+        const q = query(collection(db, 'facts'), where('text', '==', factText));
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+            console.log('No matching fact found.');
+            return;
+        }
+
+        // Delete the document(s) with the matching text
+        querySnapshot.forEach(async (docSnapshot) => {
+            await deleteDoc(doc(db, 'facts', docSnapshot.id));
+        });
+        let deletedFactHtml = '';
+
+        deletedFactHtml += `<div class="message bot-message"><strong>Bot:</strong> ${'Fact deleted successfully.'}</div>`;
+        chatbox.innerHTML += deletedFactHtml;
+        chatbox.scrollTop = chatbox.scrollHeight;
+        console.log('Fact deleted successfully.');
+    } catch (error) {
+        console.error("Error deleting Fact: ", error);
     }
 }
 
