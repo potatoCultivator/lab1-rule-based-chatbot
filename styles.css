@@ -171,6 +171,7 @@ textarea::-webkit-scrollbar {
     .wrapper {
         width: 90%;
         padding: 10px;
+        height: 80px;
         bottom: 10px;
         margin-top: 20px; /* Add margin to create space between .body and .wrapper */
     }
