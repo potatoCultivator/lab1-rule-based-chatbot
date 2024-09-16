@@ -162,7 +162,7 @@ textarea::-webkit-scrollbar {
 @media (max-width: 768px) {
     .body {
         width: 90%;
-        height: 500px;
+        height: 510px;
         top: 10px;
         padding: 10px;
         margin-bottom: 20px; /* Add margin to prevent overlapping */
@@ -172,7 +172,7 @@ textarea::-webkit-scrollbar {
         width: 90%;
         padding: 10px;
         height: auto; /* Adjust height to fit content */
-        bottom: 20px;
+        bottom: 10px;
         margin-top: 20px; /* Add margin to create space between .body and .wrapper */
         display: flex;
         flex-direction: column; /* Stack elements vertically */
