@@ -169,15 +169,17 @@ textarea::-webkit-scrollbar {
     }
 
     .wrapper {
-        width: 90%;
+        width: 95%;
         padding: 10px;
-        height: 40px;
-        bottom: 10px;
+        height: auto; /* Adjust height to fit content */
+        bottom: -300px;
         margin-top: 20px; /* Add margin to create space between .body and .wrapper */
         display: flex;
+        flex-direction: column; /* Stack elements vertically */
         justify-content: center; /* Center horizontally */
         align-items: center; /* Center vertically */
         gap: 10px; /* Add space between elements */
+        position: relative; /* Allow the wrapper to adjust its size */
     }
 
     .wrapper h2 {
@@ -188,6 +190,7 @@ textarea::-webkit-scrollbar {
         font-size: 18px;
         padding: 10px;
         width: calc(100% - 120px); /* Adjust width to account for the button and select */
+        resize: none; /* Disable resizing */
     }
 
     #sendButton {
