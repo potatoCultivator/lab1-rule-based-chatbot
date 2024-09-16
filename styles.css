@@ -162,7 +162,7 @@ textarea::-webkit-scrollbar {
 @media (max-width: 768px) {
     .body {
         width: 90%;
-        height: 300px;
+        height: 500px;
         top: 10px;
         padding: 10px;
         margin-bottom: 20px; /* Add margin to prevent overlapping */
@@ -188,7 +188,7 @@ textarea::-webkit-scrollbar {
 
     #sendButton {
         padding: 8px 10px;
-        font-size: 18px;
+        font-size: 16px;
     }
 
     #actionSelect {
