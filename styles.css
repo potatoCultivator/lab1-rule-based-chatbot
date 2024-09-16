@@ -148,6 +148,7 @@ textarea::-webkit-scrollbar {
       width: 90%;
       padding: 10px;
       bottom: 10px;
+      margin-top: 20px; /* Add margin to prevent overlapping */
   }
 
   .wrapper h2 {
