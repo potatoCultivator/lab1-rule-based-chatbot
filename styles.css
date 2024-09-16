@@ -160,46 +160,41 @@ textarea::-webkit-scrollbar {
 
 /* Media query for mobile devices */
 @media (max-width: 768px) {
-  .app-bar, .body, .wrapper {
-      width: 90%;
+    .body {
+        width: 90%;
+        height: auto;
+        top: 10px;
+        padding: 10px;
+        margin-bottom: 20px; /* Add margin to prevent overlapping */
+    }
+  
+    .wrapper {
+        width: 90%;
+        padding: 10px;
+        bottom: 10px;
+    }
+  
+    .wrapper h2 {
+        font-size: 24px;
+    }
+  
+    .wrapper textarea {
+        font-size: 18px;
+        padding: 10px;
+        width: calc(100% - 120px); /* Adjust width to account for the button and select */
+    }
+  
+    #sendButton {
+        padding: 8px 10px;
+        font-size: 18px;
+    }
+  
+    #actionSelect {
+        padding: 8px 10px;
+        font-size: 18px;
+    }
+  
+    .chatbox {
+        height: calc(100vh - 200px); /* Adjust height for mobile view */
+    }
   }
-
-  .body {
-      height: auto;
-      top: 10px;
-      padding: 10px;
-      margin-bottom: 20px; /* Add margin to prevent overlapping */
-  }
-
-  .wrapper {
-      padding: 5px; /* Reduce padding */
-      bottom: 10px;
-      margin-top: 10px; /* Reduce margin */
-      width: 95%; /* Make wrapper smaller */
-      height: 10vh;
-  }
-
-  .wrapper h2 {
-      font-size: 24px;
-  }
-
-  .wrapper textarea {
-      font-size: 16px; /* Reduce font size */
-      padding: 5px; /* Reduce padding */
-      width: calc(100% - 100px); /* Adjust width to account for the button and select */
-  }
-
-  #sendButton {
-      padding: 6px 8px; /* Reduce padding */
-      font-size: 16px; /* Reduce font size */
-  }
-
-  #actionSelect {
-      padding: 6px 8px; /* Reduce padding */
-      font-size: 16px; /* Reduce font size */
-  }
-
-  .chatbox {
-      height: calc(100vh - 200px); /* Adjust height for mobile view */
-  }
-}
