@@ -9,6 +9,30 @@ body {
     overflow: hidden; /* Prevent body from scrolling */
 }
 
+.app-bar {
+    width: 1070px; /* Same width as .body and .wrapper */
+    background: transparent;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 35px;
+    /* box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 12px 40px rgba(0, 0, 0, 0.2); */
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.app-bar h1 {
+    margin: 0;
+    font-size: 34px;
+    font-family: 'Poppins', sans-serif; /* Apply Poppins font */
+    position: absolute; /* Position the text absolutely */
+    left: 50%;
+    transform: translateX(-50%); /* Center the text horizontally */
+    text-align: center; /* Ensure text alignment is centered */
+}
+
 .body {
     width: 1070px;
     height: 600px;
@@ -17,7 +41,7 @@ body {
     border-radius: 35px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 12px 40px rgba(0, 0, 0, 0.2); /* Increased shadow */
     position: fixed; /* Changed to fixed to prevent scrolling */
-    top: 50px; /* Move the element up by setting the top property */
+    top: 70px; /* Move the element down to account for the app bar */
     left: 50%;
     transform: translateX(-50%);
     overflow: hidden; /* Prevent wrapper from scrolling */
@@ -136,8 +160,11 @@ textarea::-webkit-scrollbar {
 
 /* Media query for mobile devices */
 @media (max-width: 768px) {
-  .body {
+  .app-bar, .body, .wrapper {
       width: 90%;
+  }
+
+  .body {
       height: auto;
       top: 10px;
       padding: 10px;
@@ -145,7 +172,6 @@ textarea::-webkit-scrollbar {
   }
 
   .wrapper {
-      width: 90%;
       padding: 10px;
       bottom: 10px;
       margin-top: 20px; /* Add margin to prevent overlapping */
