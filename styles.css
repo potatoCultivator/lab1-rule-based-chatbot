@@ -175,7 +175,8 @@ textarea::-webkit-scrollbar {
       padding: 5px; /* Reduce padding */
       bottom: 10px;
       margin-top: 10px; /* Reduce margin */
-      width: 80%; /* Make wrapper smaller */
+      width: 95%; /* Make wrapper smaller */
+      height: 10vh;
   }
 
   .wrapper h2 {
