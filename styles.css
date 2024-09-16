@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(#4671EA, #AC34E7);
+    overflow: hidden; /* Prevent body from scrolling */
+}
+
+.body {
+    width: 1070px;
+    height: 600px;
+    padding: 20px 30px 25px 30px; /* Adjusted padding values */
+    background: #fff;
+    border-radius: 35px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 12px 40px rgba(0, 0, 0, 0.2); /* Increased shadow */
+    position: fixed; /* Changed to fixed to prevent scrolling */
+    top: 50px; /* Move the element up by setting the top property */
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: hidden; /* Prevent wrapper from scrolling */
+}
+
+.wrapper {
+    width: 1070px;
+    padding: 20px 30px 25px 30px; /* Adjusted padding values */
+    background: #fff;
+    border-radius: 35px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 12px 40px rgba(0, 0, 0, 0.2); /* Increased shadow */
+    position: fixed; /* Changed to fixed to prevent scrolling */
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: hidden; /* Prevent wrapper from scrolling */
+}
+
+.wrapper h2 {
+    color: #4671EA;
+    font-size: 28px;
+    text-align: center;
+}
+
+.textarea-container {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.wrapper textarea {
+    width: calc(100% - 140px); /* Adjust width to account for the button and select */
+    height: 59px;
+    padding: 15px;
+    border-radius: 5px;
+    outline: none;
+    resize: none;
+    font-size: 21px;
+    border: none;
+    font-family: 'Poppins', sans-serif; /* Set font-family */
+}
+
+textarea::-webkit-scrollbar {
+    width: 0px;
+}
+
+#actionSelect {
+    background-color: transparent; /* Make background transparent */
+    color: #4671EA; /* Set text color */
+    border: 2px solid #4671EA; /* Add border */
+    padding: 8px 18px; /* Adjust padding to account for border */
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 21px;
+    margin-left: 10px;
+}
+
+#actionSelect:hover {
+    background-color: #4671EA;
+    color: white; /* Change text color on hover */
+}
+
+.chatbox {
+    border: none;
+    padding: 10px;
+    height: 580px;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chatbox .message {
+    margin: 5px 0;
+    font-family: 'Poppins', sans-serif; /* Set font-family */
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 70%;
+}
+
+.chatbox .user-message {
+    background-color: #e1ffc7;
+    align-self: flex-end;
+    text-align: right;
+}
+
+.chatbox .bot-message {
+    background-color: #f1f1f1;
+    align-self: flex-start;
+    text-align: left;
+}
+
+/* Hide scrollbar for WebKit browsers */
+.chatbox::-webkit-scrollbar {
+    display: none;
+}
+
+#sendButton {
+  background-color: transparent; /* Make background transparent */
+  color: #4671EA; /* Set text color */
+  border: 2px solid #4671EA; /* Add border */
+  padding: 8px 18px; /* Adjust padding to account for border */
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 21px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#sendButton i {
+  font-size: 25px;
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+  .body {
+      width: 90%;
+      height: auto;
+      top: 10px;
+      padding: 10px;
+  }
+
+  .wrapper {
+      width: 90%;
+      padding: 10px;
+      bottom: 10px;
+  }
+
+  .wrapper h2 {
+      font-size: 24px;
+  }
+
+  .wrapper textarea {
+      font-size: 18px;
+      padding: 10px;
+      width: calc(100% - 120px); /* Adjust width to account for the button and select */
+  }
+
+  #sendButton {
+      padding: 8px 10px;
+      font-size: 18px;
+  }
+
+  #actionSelect {
+      padding: 8px 10px;
+      font-size: 18px;
+  }
+
+  .chatbox {
+      height: calc(100vh - 200px); /* Adjust height for mobile view */
+  }
+}
