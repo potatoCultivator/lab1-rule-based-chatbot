@@ -21,6 +21,12 @@ const textarea = document.getElementById('textarea');
 const sendButton = document.getElementById('sendButton');
 const actionSelect = document.getElementById('actionSelect');
 
+// getFacts();
+getRules();
+
+const currentRules = [];
+const currentFacts = [];
+
 textarea.addEventListener("keydown", e => {
     if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault(); // Prevent the default action of adding a new line
@@ -33,31 +39,36 @@ sendButton.addEventListener("click", () => {
 });
 
 async function sendMessage() {
-    const userInput = textarea.value;
+    let userInput = textarea.value.trim();
     const chatbox = document.getElementById('chatbox');
     const action = actionSelect.value;
 
-    if (userInput.trim() === '') return;
+    if (userInput === '') return;
 
     try {
-        const userInput = textarea.value;
         chatbox.innerHTML += `<div class="message user-message"><strong>You:</strong> ${userInput}</div>`;
         textarea.value = ''; // Clear the textarea
         
-        if (userInput.toLowerCase() === 'display all rules') {
+        userInput = userInput.toLowerCase(); // Convert input to lowercase
+
+        if (userInput === 'display all rules') {
             getRules();
-        } else if (userInput.toLowerCase() === 'display all facts') {
+        } else if (userInput === 'display all facts') {
             getFacts();
-        } else if (userInput.toLowerCase().startsWith('delete rule')) {
-            const ruleText = userInput.substring(12).trim().toLowerCase();
+        } else if (userInput.startsWith('delete rule')) {
+            const ruleText = userInput.substring(12).trim();
             console.log('Rule to delete: ', ruleText);
             deleteRuleByText(ruleText);
-        } else if (userInput.toLowerCase().startsWith('display antecedent consequent')) {
+        } else if (userInput.startsWith('display antecedent consequent')) {
             displayAntecedentConsequent();
-        } else if (userInput.toLowerCase().startsWith('delete fact')) {
-            const factText = userInput.substring(12).trim().toLowerCase();
+        } else if (userInput.startsWith('delete fact')) {
+            const factText = userInput.substring(12).trim();
             console.log('Fact to delete: ', factText);
             deleteFactByText(factText);
+        } else if(userInput === 'generate answer') {
+            generatAnswer();
+        } else if(userInput === 'delete all facts') {
+            deleteAllFacts();
         } else {
             // Determine the collection based on the selected action
             if (action === 'chat') {
@@ -95,6 +106,8 @@ async function saveFact(userInput) {
         text: userInput.toLowerCase(),
         timestamp: serverTimestamp()
     });
+    currentFacts.push(userInput.toLowerCase());
+    // getFacts();
 }
 
 async function saveRule(userInput) {
@@ -113,6 +126,8 @@ async function saveChat(userInput) {
     });
 }
 
+
+
 async function getFacts() {
     try {
         const querySnapshot = await getDocs(collection(db, 'facts'));
@@ -120,6 +135,7 @@ async function getFacts() {
 
         querySnapshot.forEach(doc => {
             const fact = doc.data().text; // Assuming each document has a 'text' field for the fact
+            currentFacts.push(fact);
             factsHtml += `<div class="message bot-message"><strong>Bot:</strong> ${fact}</div>`;
         });
 
@@ -137,6 +153,7 @@ async function getRules() {
 
         querySnapshot.forEach(doc => {
             const rule = doc.data().text; // Assuming each document has a 'text' field for the rule
+            currentRules.push(rule); 
             rulesHtml += `<div class="message bot-message"><strong>Bot:</strong> ${rule}</div>`;
         });
 
@@ -146,6 +163,8 @@ async function getRules() {
         console.error("Error getting rules: ", error);
     }
 }
+
+console.log(currentRules);
 
 async function deleteRuleByText(ruleText) {
     try {
@@ -199,6 +218,23 @@ async function deleteFactByText(factText) {
     }
 }
 
+async function deleteAllFacts() {
+    try {
+        const querySnapshot = await getDocs(collection(db, 'facts'));
+        querySnapshot.forEach(async (doc) => {
+            await deleteDoc(doc.ref);
+        });
+        let deletedFactHtml = '';
+
+        deletedFactHtml += `<div class="message bot-message"><strong>Bot:</strong> ${'All facts deleted successfully.'}</div>`;
+        chatbox.innerHTML += deletedFactHtml;
+        chatbox.scrollTop = chatbox.scrollHeight;
+        console.log('All facts deleted successfully.');
+    } catch (error) {
+        console.error("Error deleting all facts: ", error);
+    }
+}
+
 async function displayAntecedentConsequent() {
     try {
         // Fetch all rules from the database
@@ -221,6 +257,53 @@ async function displayAntecedentConsequent() {
     } catch (error) {
         console.error("Error fetching rules: ", error);
     }
+}
+
+async function generatAnswer() {
+    // Fetch current rules and facts from the database
+    const newRules = [];
+    const newFacts = [];
+
+    const querySnapshot_rules = await getDocs(collection(db, 'rules'));
+    querySnapshot_rules.forEach(doc => {
+        const rule = doc.data().text; // Assuming each document has a 'text' field for the rule
+        newRules.push(rule);
+    });
+
+    const querySnapshot_facts = await getDocs(collection(db, 'facts'));
+    querySnapshot_facts.forEach(doc => {
+        const fact = doc.data().text; // Assuming each document has a 'text' field for the fact
+        newFacts.push(fact);
+    });
+
+    // Forward chaining
+    let addedNewFact = true;
+
+    while (addedNewFact === true) {
+        addedNewFact = false;
+
+        newRules.forEach(rule => {
+            // Separate antecedent and consequent
+            const [antecedent, consequent] = rule.split('then').map(part => part.trim());
+
+            // Remove "if" and the space after it from the antecedent
+            const cleanedAntecedent = antecedent.replace(/^if\s+/, '');
+
+            // Split the antecedent into individual conditions
+            const conditions = cleanedAntecedent.split('and').map(condition => condition.trim());
+
+            // Check if all conditions are present in newFacts
+            const allConditionsMet = conditions.every(condition => newFacts.includes(condition));
+
+            if (allConditionsMet && !newFacts.includes(consequent)) {
+                newFacts.push(consequent);
+                saveFact(consequent);
+                console.log('New fact added: ', consequent);
+                addedNewFact = true;
+            }
+        });
+    }
+    getFacts();
 }
 
 // sample code for splitting antecedent and consequent
