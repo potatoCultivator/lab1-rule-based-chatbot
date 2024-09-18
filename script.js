@@ -22,10 +22,33 @@ const sendButton = document.getElementById('sendButton');
 const actionSelect = document.getElementById('actionSelect');
 
 // getFacts();
-getRules();
+// getRules();
 
 const currentRules = [];
 const currentFacts = [];
+
+chatbox.innerHTML += `
+        <div class="message bot-message">
+            Welcome to the Chatbot! Here are some commands you can use:
+            <ul>
+                <li><strong>display all rules</strong>: Display all rules</li>
+                <li><strong>display all facts</strong>: Display all facts</li>
+                <li><strong>delete rule [rule]</strong>: Delete a specific rule</li>
+                <li><strong>display antecedent consequent</strong>: Display antecedent and consequent</li>
+                <li><strong>delete fact [fact]</strong>: Delete a specific fact</li>
+                <li><strong>generate answer</strong>: Generate an answer</li>
+                <li><strong>delete all facts</strong>: Delete all facts</li>
+            </ul>
+            <p>Here are the purposes of the buttons and select options:</p>
+            <ul>
+                <li><strong>Chat</strong>: Send a message to the chatbot.</li>
+                <li><strong>Add Rule</strong>: Add a new rule to the system.</li>
+                <li><strong>Add Fact</strong>: Add a new fact to the system.</li>
+                <li><strong>Backward Chaining</strong>: Open a dialog to input patient data for diagnosis.</li>
+            </ul>
+        </div>
+    `;
+    chatbox.scrollTop = chatbox.scrollHeight;
 
 textarea.addEventListener("keydown", e => {
     if (e.key === "Enter" && !e.shiftKey) {

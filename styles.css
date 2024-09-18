@@ -317,4 +317,11 @@ dialog button[type="submit"] {
     .chatbox {
         height: calc(100vh - 200px); /* Adjust height for mobile view */
     }
+
+     /* Media query adjustments for the backward chaining button */
+     #backwardChainingButton {
+        padding: 5px 10px; /* Reduce padding for smaller screens */
+        font-size: 12px; /* Adjust font size for readability */
+        height: 35px; /* Adjust height to fit better */
+    }
 }
