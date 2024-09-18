@@ -276,7 +276,12 @@ async function generatAnswer() {
         newFacts.push(fact);
     });
 
-    // Forward chaining
+    forwardChaining(newRules, newFacts);
+    getFacts();
+}
+
+function forwardChaining(newRules, newFacts)
+{
     let addedNewFact = true;
 
     while (addedNewFact === true) {
@@ -303,7 +308,36 @@ async function generatAnswer() {
             }
         });
     }
-    getFacts();
+}
+
+async function backwardChaining(goal, newRules, newFacts) {
+    // Helper function to check if a condition is met
+    function isConditionMet(condition) {
+        if (newFacts.includes(condition)) {
+            return true;
+        }
+
+        for (const rule of newRules) {
+            const [antecedent, consequent] = rule.split('then').map(part => part.trim());
+            const cleanedAntecedent = antecedent.replace(/^if\s+/, '');
+            const conditions = cleanedAntecedent.split('and').map(condition => condition.trim());
+
+            if (consequent === condition) {
+                const allConditionsMet = conditions.every(cond => isConditionMet(cond));
+                if (allConditionsMet) {
+                    newFacts.push(consequent);
+                    saveFact(consequent);
+                    console.log('New fact added: ', consequent);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // Start with the goal and work backward
+    const goalMet = isConditionMet(goal);
+    return goalMet ? goal : null;
 }
 
 // sample code for splitting antecedent and consequent
@@ -318,3 +352,106 @@ async function generatAnswer() {
 console.log("Textarea element: ", textarea);
 console.log("Send button element: ", sendButton);
 console.log("Action select element: ", actionSelect);
+
+document.addEventListener('DOMContentLoaded', () => {
+    // JavaScript to handle dialog actions
+    const dialog = document.getElementById('myDialog');
+    const backwardChainingButton = document.getElementById('backwardChainingButton');
+    const cancelButton = document.getElementById('cancelButton');
+    const confirmButton = document.getElementById('confirmButton');
+
+    // Input elements
+    const temperatureInput = document.getElementById('temperatureInput');
+    const nasalBreathingInput = document.getElementById('nasalBreathingInput');
+    const headacheInput = document.getElementById('headacheInput');
+    const coughInput = document.getElementById('coughInput');
+    const soreThroatInput = document.getElementById('soreThroatInput');
+    const antibioticsAllergyInput = document.getElementById('antibioticsAllergyInput');
+
+    // Patient data object
+    let patient = {
+        temperature: 37.5,
+        nasalBreathing: 'light',
+        symptoms: [],
+        soreThroat: false,
+        antibioticsAllergy: false
+    };
+
+    backwardChainingButton.addEventListener('click', () => {
+        dialog.showModal();
+    });
+
+    cancelButton.addEventListener('click', () => {
+        dialog.close();
+    });
+
+    confirmButton.addEventListener('click', (event) => {
+        event.preventDefault(); // Prevent form submission
+        patient.temperature = parseFloat(temperatureInput.value);
+        patient.nasalBreathing = nasalBreathingInput.value;
+        patient.symptoms = [];
+        if (headacheInput.value === 'true') patient.symptoms.push('headache');
+        if (coughInput.value === 'true') patient.symptoms.push('cough');
+        patient.soreThroat = soreThroatInput.value === 'true';
+        patient.antibioticsAllergy = antibioticsAllergyInput.value === 'true';
+
+        console.log('Patient Data:', patient);
+        dialog.close();
+        // Call the backward chaining function with the patient data
+        const result = diagnoseAndPrescribe(patient);
+        console.log('Final Decision:', result);
+        // Display the result in the chatbox
+        const chatbox = document.getElementById('chatbox');
+        chatbox.innerHTML += `<div class="message bot-message"><strong>Bot:</strong> ${result}</div>`;
+        chatbox.scrollTop = chatbox.scrollHeight;
+    });
+
+    // Helper functions to evaluate the rules
+    function hasFever(temperature) {
+        if (temperature < 37) return 'no fever';
+        if (temperature >= 37 && temperature < 38) return 'low fever';
+        if (temperature >= 38) return 'high fever';
+    }
+
+    function checkNasalBreathing(breathing) {
+        if (breathing === 'light') return 'nasal discharge';
+        if (breathing === 'heavy') return 'sinus membranes swelling';
+    }
+
+    function hasCold(patient) {
+        const fever = hasFever(patient.temperature);
+        const hasNasalDischarge = checkNasalBreathing(patient.nasalBreathing) === 'nasal discharge';
+        const hasHeadache = patient.symptoms.includes('headache');
+        const hasCough = patient.symptoms.includes('cough');
+        
+        return (fever === 'low fever' && hasNasalDischarge && hasHeadache && hasCough);
+    }
+
+    function shouldTreat(patient) {
+        const hasColdCondition = hasCold(patient);
+        return hasColdCondition && patient.soreThroat;
+    }
+
+    function getMedication(patient) {
+        if (!shouldTreat(patient)) {
+            return 'Don’t treat, no medication needed';
+        }
+
+        if (patient.antibioticsAllergy) {
+            return 'Give Tylenol';
+        } else {
+            return 'Give antibiotics';
+        }
+    }
+
+    // Backward chaining process to determine if treatment and medication are needed
+    function diagnoseAndPrescribe(patient) {
+        const shouldGiveMedication = shouldTreat(patient);
+
+        if (shouldGiveMedication) {
+            return getMedication(patient);
+        } else {
+            return "No treatment needed";
+        }
+    }
+});

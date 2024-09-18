@@ -27,7 +27,53 @@
                 <option value="addRule">Add Rule</option>
                 <option value="addFact">Add Fact</option>
             </select>
+            <button id="backwardChainingButton">Backward Chaining</button>
         </div>
     </div>
+
+    <!-- Dialog Element -->
+    <dialog id="myDialog">
+        <form method="dialog">
+            <p><label>Temperature: <input type="number" id="temperatureInput" step="0.1"></label></p>
+            <p><label>Nasal Breathing: 
+                <select id="nasalBreathingInput">
+                    <option value="light">Light</option>
+                    <option value="heavy">Heavy</option>
+                </select>
+            </label></p>
+
+            <p><label>Headache: 
+                <select id="headacheInput">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </label></p>
+
+            <p><label>cough: 
+                <select id="coughInput">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </label></p>
+
+            <p><label>Sore Throat: 
+                <select id="soreThroatInput">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </label></p>
+
+            <p><label>Antibiotics Allergy: 
+                <select id="antibioticsAllergyInput">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </label></p>
+            <menu>
+                <button id="cancelButton" type="reset">Cancel</button>
+                <button id="confirmButton" type="submit">Confirm</button>
+            </menu>
+        </form>
+    </dialog>
 </body>
 </html>

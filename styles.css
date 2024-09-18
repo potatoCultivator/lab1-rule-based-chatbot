@@ -158,6 +158,115 @@ textarea::-webkit-scrollbar {
   font-size: 25px;
 }
 
+/* Styles for the backward chaining button */
+#backwardChainingButton {
+    background-color: transparent; /* Make background transparent */
+    color: #4671EA; /* Set text color */
+    border: 2px solid #4671EA; /* Add border */
+    padding: 8px 18px; /* Adjust padding to account for border */
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+}
+
+#backwardChainingButton:hover {
+    background-color: #4671EA;
+    color: white; /* Change text color on hover */
+}
+
+
+/* Styles for the dialog */
+/* Styles for the dialog */
+dialog {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 300px;
+    max-width: 80%;
+    font-family: 'Poppins', sans-serif; /* Set font-family */
+    background-color: #fff; /* Ensure background color is white */
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+dialog form {
+    display: flex;
+    flex-direction: column;
+}
+
+dialog p {
+    margin-bottom: 20px;
+    font-size: 16px; /* Set font size */
+    color: #333; /* Set text color */
+}
+
+dialog label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500; /* Set font weight */
+    margin-bottom: 10px;
+}
+
+dialog input[type="number"],
+dialog select {
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #4671EA; /* Add border */
+    border-radius: 5px;
+    outline: none;
+    font-family: 'Poppins', sans-serif; /* Set font-family */
+    margin-top: 5px; /* Add margin to separate from label */
+}
+
+.dialog-radio-group {
+    display: flex;
+    align-items: center;
+    margin-top: 5px; /* Add margin to separate from label */
+}
+
+.dialog-radio-group input[type="radio"] {
+    margin-right: 5px; /* Add margin to separate from text */
+}
+
+.dialog-radio-group label {
+    margin-right: 15px; /* Add margin between radio button groups */
+}
+
+dialog menu {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+dialog button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif; /* Set font-family */
+}
+
+dialog button[type="reset"] {
+    background-color: #f44336;
+    color: white;
+}
+
+dialog button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+}
+
 /* Media query for mobile devices */
 @media (max-width: 768px) {
     .body {
