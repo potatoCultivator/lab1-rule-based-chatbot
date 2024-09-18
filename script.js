@@ -408,6 +408,18 @@ document.addEventListener('DOMContentLoaded', () => {
         dialog.close();
     });
 
+    function formatPatientInfo(patient) {
+        chatbox.innerHTML += `<div class="message user-message-bc">
+            <ul>
+                <li><strong>Temperature:</strong> ${patient.temperature}°C</li>
+                <li><strong>Nasal Breathing:</strong> ${patient.nasalBreathing}</li>
+                <li><strong>Symptoms:</strong> ${patient.symptoms.join(', ') || 'None'}</li>
+                <li><strong>Sore Throat:</strong> ${patient.soreThroat ? 'Yes' : 'No'}</li>
+                <li><strong>Antibiotics Allergy:</strong> ${patient.antibioticsAllergy ? 'Yes' : 'No'}</li>
+            </ul>
+        </div>`;
+    }
+
     confirmButton.addEventListener('click', (event) => {
         event.preventDefault(); // Prevent form submission
         patient.temperature = parseFloat(temperatureInput.value);
@@ -421,6 +433,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Patient Data:', patient);
         dialog.close();
         // Call the backward chaining function with the patient data
+        formatPatientInfo(patient);
         const result = diagnoseAndPrescribe(patient);
         console.log('Final Decision:', result);
         // Display the result in the chatbox

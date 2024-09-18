@@ -129,6 +129,12 @@ textarea::-webkit-scrollbar {
     text-align: right;
 }
 
+.chatbox .user-message-bc {
+    background-color: #e1ffc7;
+    align-self: flex-end;
+    text-align: left;
+}
+
 .chatbox .bot-message {
     background-color: #f1f1f1;
     align-self: flex-start;
